@@ -1,11 +1,49 @@
+"use client"
 import { Button } from '@/components/ui/button'
 import { Field, FieldDescription, FieldGroup, FieldLabel, FieldSeparator } from '@/components/ui/field'
 import { Input } from '@/components/ui/input'
+import { Spinner } from '@/components/ui/spinner'
+import { authClient } from '@/lib/auth-client'
 import { cn } from '@/lib/utils'
 import Link from 'next/link'
+import { useState } from 'react'
 import { BsGoogle } from 'react-icons/bs'
+import { toast } from 'sonner'
 
 export default function SignIn() {
+
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+    const [loading, setLoading] = useState(false);
+
+    const loginHandler = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
+
+        if (!email || !password) {
+            toast.error('Please fill all the fields')
+            return
+        }
+
+        setLoading(true)
+
+        const { error } = await authClient.signIn.email({
+            email: email,
+            password: password,
+            rememberMe: true,
+            callbackURL: "/dashboard",
+        });
+
+        if (error) {
+            toast.error(error.message || 'Something went wrong')
+        } else {
+            toast.success('Logged in successfully')
+        }
+
+        setLoading(false)
+
+
+    }
+
     return (
         <div className="grid min-h-svh lg:grid-cols-2">
             <div className="flex flex-col gap-4 p-6 md:p-10">
@@ -16,7 +54,8 @@ export default function SignIn() {
                 </div>
                 <div className="flex flex-1 items-center justify-center">
                     <div className="w-full max-w-xs">
-                        <form className={cn("flex flex-col gap-6")}>
+                        <form onSubmit={loginHandler}
+                            className={cn("flex flex-col gap-6")}>
                             <FieldGroup>
                                 <div className="flex flex-col items-center gap-1 text-center">
                                     <h1 className="text-2xl font-bold">Login to your account</h1>
@@ -26,7 +65,8 @@ export default function SignIn() {
                                 </div>
                                 <Field>
                                     <FieldLabel htmlFor="email">Email</FieldLabel>
-                                    <Input id="email" type="email" placeholder="m@example.com" required />
+                                    <Input value={email} onChange={(e) => setEmail(e.target.value)}
+                                        id="email" type="email" placeholder="m@example.com" required />
                                 </Field>
                                 <Field>
                                     <div className="flex items-center">
@@ -38,10 +78,11 @@ export default function SignIn() {
                                             Forgot your password?
                                         </Link>
                                     </div>
-                                    <Input id="password" type="password" required />
+                                    <Input value={password} onChange={(e) => setPassword(e.target.value)}
+                                        id="password" type="password" required />
                                 </Field>
                                 <Field>
-                                    <Button type="submit">Login</Button>
+                                    <Button disabled={loading} type="submit">{loading ? <Spinner /> : "Login"}</Button>
                                 </Field>
                                 <FieldSeparator>Or continue with</FieldSeparator>
                                 <Field>

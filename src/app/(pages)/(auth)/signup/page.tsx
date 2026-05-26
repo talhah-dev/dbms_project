@@ -1,3 +1,4 @@
+"use client"
 import { Button } from '@/components/ui/button'
 import {
     Field,
@@ -7,11 +8,55 @@ import {
     FieldSeparator,
 } from '@/components/ui/field'
 import { Input } from '@/components/ui/input'
+import { Spinner } from '@/components/ui/spinner'
+import { authClient } from '@/lib/auth-client'
 import { cn } from '@/lib/utils'
 import Link from 'next/link'
+import { useState } from 'react'
 import { BsGoogle } from 'react-icons/bs'
+import { toast } from 'sonner'
 
 export default function Signup() {
+
+    const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
+    const [loading, setLoading] = useState(false);
+
+    const signUpHandler = async (e: React.FormEvent<HTMLFormElement>) => {
+
+        e.preventDefault();
+        setLoading(true);
+
+
+        if (!name || !email || !password || !confirmPassword) {
+            toast.error("All fields are required");
+            return;
+        }
+
+        if (password !== confirmPassword) {
+            toast.error("Passwords do not match");
+            return;
+        }
+
+        const { data, error } = await authClient.signUp.email({
+            name: name, 
+            email: email, 
+            password: password, 
+            callbackURL: "/signin",
+        });
+
+        if (!error) {
+            toast.success("Sign up successful");
+        } else {
+            toast.error(error.message || "Something went wrong");
+        }
+
+        setLoading(false);
+    }
+
+
     return (
         <div className="grid min-h-svh lg:grid-cols-2">
             <div className="flex flex-col gap-4 p-6 md:p-10">
@@ -23,7 +68,7 @@ export default function Signup() {
 
                 <div className="flex flex-1 items-center justify-center">
                     <div className="w-full max-w-xs">
-                        <form className={cn('flex flex-col gap-6')}>
+                        <form onSubmit={signUpHandler} className={cn('flex flex-col gap-6')}>
                             <FieldGroup className='gap-y-5'>
                                 <div className="flex flex-col items-center gap-1 text-center">
                                     <h1 className="text-2xl font-bold">
@@ -39,6 +84,8 @@ export default function Signup() {
                                         Full Name
                                     </FieldLabel>
                                     <Input
+                                        onChange={(e) => setName(e.target.value)}
+                                        value={name}
                                         id="name"
                                         type="text"
                                         placeholder="Muhammad Talha"
@@ -51,6 +98,8 @@ export default function Signup() {
                                         Email
                                     </FieldLabel>
                                     <Input
+                                        onChange={(e) => setEmail(e.target.value)}
+                                        value={email}
                                         id="email"
                                         type="email"
                                         placeholder="m@example.com"
@@ -63,6 +112,8 @@ export default function Signup() {
                                         Password
                                     </FieldLabel>
                                     <Input
+                                        onChange={(e) => setPassword(e.target.value)}
+                                        value={password}
                                         id="password"
                                         type="password"
                                         required
@@ -74,6 +125,8 @@ export default function Signup() {
                                         Confirm Password
                                     </FieldLabel>
                                     <Input
+                                        onChange={(e) => setConfirmPassword(e.target.value)}
+                                        value={confirmPassword}
                                         id="confirm-password"
                                         type="password"
                                         required
@@ -81,8 +134,8 @@ export default function Signup() {
                                 </Field>
 
                                 <Field>
-                                    <Button type="submit">
-                                        Create Account
+                                    <Button type="submit" disabled={loading}>
+                                        {loading ? <Spinner /> : "Create Account"}
                                     </Button>
                                 </Field>
 
