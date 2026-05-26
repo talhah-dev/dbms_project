@@ -1,4 +1,5 @@
 "use client"
+import { GoogleAuthButton } from '@/components/auth/google-auth-button'
 import { Button } from '@/components/ui/button'
 import {
     Field,
@@ -13,7 +14,6 @@ import { authClient } from '@/lib/auth-client'
 import { cn } from '@/lib/utils'
 import Link from 'next/link'
 import { useState } from 'react'
-import { BsGoogle } from 'react-icons/bs'
 import { toast } from 'sonner'
 
 export default function Signup() {
@@ -32,11 +32,13 @@ export default function Signup() {
 
         if (!name || !email || !password || !confirmPassword) {
             toast.error("All fields are required");
+            setLoading(false);
             return;
         }
 
         if (password !== confirmPassword) {
             toast.error("Passwords do not match");
+            setLoading(false);
             return;
         }
 
@@ -144,10 +146,7 @@ export default function Signup() {
                                 </FieldSeparator>
 
                                 <Field>
-                                    <Button variant="outline" type="button">
-                                        <BsGoogle />
-                                        Sign up with Google
-                                    </Button>
+                                    <GoogleAuthButton label="Sign up with Google" />
 
                                     <FieldDescription className="text-center">
                                         Already have an account?{' '}

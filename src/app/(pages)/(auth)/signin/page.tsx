@@ -1,5 +1,6 @@
 "use client"
 import { Button } from '@/components/ui/button'
+import { GoogleAuthButton } from '@/components/auth/google-auth-button'
 import { Field, FieldDescription, FieldGroup, FieldLabel, FieldSeparator } from '@/components/ui/field'
 import { Input } from '@/components/ui/input'
 import { Spinner } from '@/components/ui/spinner'
@@ -7,7 +8,6 @@ import { authClient } from '@/lib/auth-client'
 import { cn } from '@/lib/utils'
 import Link from 'next/link'
 import { useState } from 'react'
-import { BsGoogle } from 'react-icons/bs'
 import { toast } from 'sonner'
 
 export default function SignIn() {
@@ -40,10 +40,7 @@ export default function SignIn() {
         }
 
         setLoading(false)
-
-
     }
-
     return (
         <div className="grid min-h-svh lg:grid-cols-2">
             <div className="flex flex-col gap-4 p-6 md:p-10">
@@ -86,10 +83,7 @@ export default function SignIn() {
                                 </Field>
                                 <FieldSeparator>Or continue with</FieldSeparator>
                                 <Field>
-                                    <Button variant="outline" type="button">
-                                        <BsGoogle />
-                                        Login with Google
-                                    </Button>
+                                    <GoogleAuthButton label="Login with Google" />
                                     <FieldDescription className="text-center">
                                         Don&apos;t have an account?{" "}
                                         <Link href="/signup" className="underline underline-offset-4">
