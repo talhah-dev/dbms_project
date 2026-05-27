@@ -42,7 +42,7 @@ export default function Signup() {
             return;
         }
 
-        const { data, error } = await authClient.signUp.email({
+        const { error } = await authClient.signUp.email({
             name: name, 
             email: email, 
             password: password, 

@@ -1,0 +1,74 @@
+[
+  {
+    "id": 1,
+    "name": "Ayesha Khan",
+    "program": "BS Computer Science",
+    "status": "On Track",
+    "attendance": "94%",
+    "gpa": "3.78",
+    "advisor": "Dr. Sana Ahmed"
+  },
+  {
+    "id": 2,
+    "name": "Ali Raza",
+    "program": "BS Software Engineering",
+    "status": "Needs Attention",
+    "attendance": "68%",
+    "gpa": "2.61",
+    "advisor": "Prof. Hamza Siddiqui"
+  },
+  {
+    "id": 3,
+    "name": "Fatima Noor",
+    "program": "BBA",
+    "status": "On Track",
+    "attendance": "91%",
+    "gpa": "3.52",
+    "advisor": "Dr. Mahnoor Aslam"
+  },
+  {
+    "id": 4,
+    "name": "Usman Tariq",
+    "program": "BS Data Science",
+    "status": "At Risk",
+    "attendance": "59%",
+    "gpa": "2.12",
+    "advisor": "Dr. Zain Haider"
+  },
+  {
+    "id": 5,
+    "name": "Hira Javed",
+    "program": "BS Information Technology",
+    "status": "On Track",
+    "attendance": "88%",
+    "gpa": "3.33",
+    "advisor": "Prof. Areeba Malik"
+  },
+  {
+    "id": 6,
+    "name": "Bilal Hussain",
+    "program": "BS Computer Science",
+    "status": "Needs Attention",
+    "attendance": "72%",
+    "gpa": "2.84",
+    "advisor": "Dr. Sana Ahmed"
+  },
+  {
+    "id": 7,
+    "name": "Maryam Iqbal",
+    "program": "BS Artificial Intelligence",
+    "status": "On Track",
+    "attendance": "96%",
+    "gpa": "3.91",
+    "advisor": "Dr. Farah Yousaf"
+  },
+  {
+    "id": 8,
+    "name": "Ahmed Saeed",
+    "program": "BCom",
+    "status": "At Risk",
+    "attendance": "61%",
+    "gpa": "2.19",
+    "advisor": "Prof. Maham Rauf"
+  }
+]
